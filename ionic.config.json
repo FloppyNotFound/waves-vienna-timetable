@@ -1,0 +1,7 @@
+{
+  "name": "waves-vienna",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
