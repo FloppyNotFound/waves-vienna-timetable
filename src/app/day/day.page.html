@@ -1,0 +1,12 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Waves Vienna 2021</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <app-explore-container
+    [timeslots$]="timeslots$"
+    (timeslotSelected)="onItemSelected($event)"
+  ></app-explore-container>
+</ion-content>

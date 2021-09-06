@@ -1,0 +1,20 @@
+<ion-list>
+  <ng-container *ngFor="let slot of timeslots$ | async">
+    <ion-item detail button (click)="onItemSelected(slot.id)">
+      <ion-avatar slot="start">
+        <img title="thumbnail" [src]="slot.thumbnail" />
+      </ion-avatar>
+      <ion-label>
+        <h2>{{ slot.title }}</h2>
+        <h3>
+          <span>{{ slot.start | date: "EEEE HH:mm" }}</span>
+          <span>&mdash;</span>
+          <span>{{ slot.end | date: "HH:mm" }}</span>
+          <span>h</span>
+          <span>, {{ slot.terms.wcs_room[0].slug }}</span>
+        </h3>
+        <p>{{ slot.excerpt }}</p>
+      </ion-label>
+    </ion-item>
+  </ng-container>
+</ion-list>
