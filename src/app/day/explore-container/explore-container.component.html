@@ -1,20 +1,34 @@
 <ion-list>
-  <ng-container *ngFor="let slot of timeslots$ | async">
-    <ion-item detail button (click)="onItemSelected(slot.id)">
-      <ion-avatar slot="start">
-        <img title="thumbnail" [src]="slot.thumbnail" />
-      </ion-avatar>
-      <ion-label>
-        <h2>{{ slot.title }}</h2>
-        <h3>
-          <span>{{ slot.start | date: "EEEE HH:mm" }}</span>
-          <span>&mdash;</span>
-          <span>{{ slot.end | date: "HH:mm" }}</span>
-          <span>h</span>
-          <span>, {{ slot.terms.wcs_room[0].slug }}</span>
-        </h3>
-        <p>{{ slot.excerpt }}</p>
-      </ion-label>
-    </ion-item>
+  <ng-container *ngIf="timeslots$ | async as timeslots; else noItems">
+    <ng-container *ngIf="timeslots.length; else noItems">
+      <ng-container *ngFor="let slot of timeslots">
+        <ion-item detail button (click)="onItemSelected(slot.id)">
+          <ion-avatar slot="start">
+            <img title="thumbnail" [src]="slot.thumbnail" />
+          </ion-avatar>
+          <ion-label>
+            <h2>
+              <span>{{ slot.title }}</span>
+              <ion-icon
+                *ngIf="slot.id | isFavorite: favorites"
+                name="star"
+                slot="icon-only"
+                class="ion-float-right"
+              ></ion-icon>
+            </h2>
+            <h3>
+              <span>{{ slot.start | date: "EEEE HH:mm" }}</span>
+              <span>&mdash;</span>
+              <span>{{ slot.end | date: "HH:mm" }}</span>
+              <span>h</span>
+              <span>, {{ slot.terms.wcs_room[0].slug }}</span>
+            </h3>
+            <p>{{ slot.excerpt }}</p>
+          </ion-label>
+        </ion-item>
+      </ng-container>
+    </ng-container>
   </ng-container>
+
+  <ng-template #noItems><ion-item>No items available.</ion-item> </ng-template>
 </ion-list>

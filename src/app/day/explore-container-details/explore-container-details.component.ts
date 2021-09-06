@@ -1,9 +1,9 @@
+import { StorageService } from './../../services/storage.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { SafeResourceUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { Subject } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { TimeSlot } from './../../backend-models/backend-models.interface';
 import { EventDataService } from './../../services/event-data.service';
 
@@ -23,7 +23,8 @@ export class ExploreContainerDetailsComponent implements OnInit, OnDestroy {
     private eventDataService: EventDataService,
     private route: ActivatedRoute,
     private loadingController: LoadingController,
-    private toastController: ToastController
+    private toastController: ToastController,
+    private storageService: StorageService
   ) {}
 
   async ngOnInit() {
@@ -36,13 +37,12 @@ export class ExploreContainerDetailsComponent implements OnInit, OnDestroy {
     this.route.paramMap
       .pipe(
         map((paramMap) => Number(paramMap.get('id'))),
-        switchMap((id) => this.eventDataService.getItem(id))
+        switchMap((id) => this.eventDataService.getItem(id)),
+        tap((item) => (this.item = item)),
+        switchMap((item) => this.storageService.checkIsFavorite(item.id)),
+        tap((isFavorite) => (this.isFavorite = isFavorite))
       )
-      .subscribe((item) => {
-        this.item = item;
-
-        this.isFavorite = false;
-
+      .subscribe(() => {
         loading.dismiss();
       });
   }
@@ -59,10 +59,15 @@ export class ExploreContainerDetailsComponent implements OnInit, OnDestroy {
 
     this.isFavorite = !this.isFavorite;
 
-    this.presentToast(this.isFavorite);
+    this.storageService
+      .setFavorite(this.item.id, this.isFavorite)
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(async () => {
+        await this.presentToast(this.isFavorite);
+      });
   }
 
-  private async presentToast(isFavActive: boolean) {
+  private async presentToast(isFavActive: boolean): Promise<void> {
     const msg = isFavActive ? 'Favorite saved' : 'Favorite removed';
 
     const toast = await this.toastController.create({

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TimeSlot } from '../../backend-models/backend-models.interface';
 
@@ -9,6 +9,8 @@ import { TimeSlot } from '../../backend-models/backend-models.interface';
 })
 export class ExploreContainerComponent {
   @Input() timeslots$: Observable<TimeSlot[]>;
+
+  @Input() favorites: number[] | undefined;
 
   @Output() timeslotSelected = new EventEmitter<number>();
 

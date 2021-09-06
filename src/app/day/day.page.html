@@ -1,12 +1,27 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>Waves Vienna 2021</ion-title>
+    <ion-buttons slot="primary">
+      <ion-button (click)="onToggleFavorites()">
+        <ion-icon
+          *ngIf="isFavoritesFilterActive"
+          name="star"
+          slot="icon-only"
+        ></ion-icon>
+        <ion-icon
+          *ngIf="!isFavoritesFilterActive"
+          name="star-outline"
+          slot="icon-only"
+        ></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <app-explore-container
-    [timeslots$]="timeslots$"
+    [timeslots$]="timeslotsToShow$"
+    [favorites]="favorites"
     (timeslotSelected)="onItemSelected($event)"
   ></app-explore-container>
 </ion-content>
