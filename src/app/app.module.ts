@@ -23,7 +23,7 @@ import { environment } from '../environments/environment';
       enabled: environment.production,
       // Register the ServiceWorker as soon as the app is stable
       // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000', // https://stackoverflow.com/a/61152966
+      registrationStrategy: 'registerImmediately', // https://stackoverflow.com/a/61152966
     }),
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],

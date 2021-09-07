@@ -22,6 +22,8 @@
       "resources": {
         "files": [
           "/assets/**",
+          "/svg/**",
+
           "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
         ]
       }
@@ -34,6 +36,16 @@
       "cacheConfig": {
         "strategy": "performance",
         "maxSize": 200,
+        "maxAge": "1d"
+      }
+    },
+    {
+      "name": "waves-timetable",
+      "urls": ["https://waves-vienna-worker.floppynotfound.workers.dev/"],
+      "cacheConfig": {
+        "strategy": "freshness",
+        "maxSize": 200,
+        "timeout": "0u",
         "maxAge": "1d"
       }
     }
