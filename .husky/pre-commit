@@ -1,0 +1,5 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Put scripts in here which should be run on commit
+npm run lint:staged
