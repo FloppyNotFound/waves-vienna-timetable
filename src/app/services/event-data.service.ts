@@ -7,10 +7,10 @@ import { TimeSlot } from '../backend-models/backend-models.interface';
 @Injectable({ providedIn: 'root' })
 export class EventDataService {
   // private readonly uri = 'http://127.0.0.1:8787';
-  private readonly uri =
+  private readonly _uri =
     'https://waves-vienna-worker.floppynotfound.workers.dev';
 
-  private data: TimeSlot[] | undefined;
+  private _data: TimeSlot[] | undefined;
 
   constructor(private backendService: HttpClient) {}
 
@@ -31,13 +31,13 @@ export class EventDataService {
   }
 
   private getData(): Observable<TimeSlot[]> {
-    if (this.data) {
-      return observableOf(this.data);
+    if (this._data) {
+      return observableOf(this._data);
     }
 
     return this.backendService
-      .get<TimeSlot[]>(this.uri)
-      .pipe(map(data => (this.data = data)));
+      .get<TimeSlot[]>(this._uri)
+      .pipe(map(data => (this._data = data)));
   }
 
   private getDataForDay(

@@ -16,29 +16,29 @@ export class ExploreContainerDetailsComponent implements OnInit, OnDestroy {
 
   item: TimeSlot;
 
-  private readonly unsubscribe = new Subject();
+  private readonly _unsubscribe = new Subject();
 
   constructor(
-    private eventDataService: EventDataService,
-    private route: ActivatedRoute,
-    private loadingController: LoadingController,
-    private toastController: ToastController,
-    private storageService: StorageService
+    private _eventDataService: EventDataService,
+    private _route: ActivatedRoute,
+    private _loadingController: LoadingController,
+    private _toastController: ToastController,
+    private _storageService: StorageService
   ) {}
 
   async ngOnInit() {
-    const loading = await this.loadingController.create({
+    const loading = await this._loadingController.create({
       message: 'Please wait...'
     });
 
     await loading.present();
 
-    this.route.paramMap
+    this._route.paramMap
       .pipe(
         map(paramMap => Number(paramMap.get('id'))),
-        switchMap(id => this.eventDataService.getItem(id)),
+        switchMap(id => this._eventDataService.getItem(id)),
         tap(item => (this.item = item as TimeSlot)),
-        switchMap(() => this.storageService.checkIsFavorite(this.item.id)),
+        switchMap(() => this._storageService.checkIsFavorite(this.item.id)),
         tap(isFavorite => (this.isFavorite = isFavorite))
       )
       .subscribe(() => {
@@ -47,8 +47,8 @@ export class ExploreContainerDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
+    this._unsubscribe.next();
+    this._unsubscribe.complete();
   }
 
   onToggleFavorite(): void {
@@ -58,9 +58,9 @@ export class ExploreContainerDetailsComponent implements OnInit, OnDestroy {
 
     this.isFavorite = !this.isFavorite;
 
-    this.storageService
+    this._storageService
       .setFavorite(this.item.id, this.isFavorite)
-      .pipe(takeUntil(this.unsubscribe))
+      .pipe(takeUntil(this._unsubscribe))
       .subscribe(async () => {
         await this.presentToast(this.isFavorite);
       });
@@ -69,7 +69,7 @@ export class ExploreContainerDetailsComponent implements OnInit, OnDestroy {
   private async presentToast(isFavActive: boolean): Promise<void> {
     const msg = isFavActive ? 'Favorite saved' : 'Favorite removed';
 
-    const toast = await this.toastController.create({
+    const toast = await this._toastController.create({
       message: msg,
       duration: 2000,
       color: isFavActive ? 'success' : 'dark'

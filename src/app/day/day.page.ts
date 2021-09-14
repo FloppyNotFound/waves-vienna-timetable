@@ -21,50 +21,50 @@ export class DayPage implements OnInit, OnDestroy {
 
   isFavoritesFilterActive: boolean;
 
-  private readonly timeslotsToShow = new Subject<TimeSlot[]>();
+  private readonly _timeslotsToShow = new Subject<TimeSlot[]>();
 
-  private readonly unsubscribe = new Subject<void>();
+  private readonly _unsubscribe = new Subject<void>();
 
-  private timeslots: TimeSlot[];
+  private _timeslots: TimeSlot[];
 
   constructor(
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private eventDataService: EventDataService,
-    private loadingController: LoadingController,
-    private storageService: StorageService
+    private _router: Router,
+    private _activatedRoute: ActivatedRoute,
+    private _eventDataService: EventDataService,
+    private _loadingController: LoadingController,
+    private _storageService: StorageService
   ) {
-    this.timeslotsToShow$ = this.timeslotsToShow.asObservable();
+    this.timeslotsToShow$ = this._timeslotsToShow.asObservable();
   }
 
   async ngOnInit(): Promise<void> {
-    const loading = await this.loadingController.create({
+    const loading = await this._loadingController.create({
       message: 'Please wait...'
     });
 
     await loading.present();
 
-    this.activatedRoute.data
+    this._activatedRoute.data
       .pipe(
-        takeUntil(this.unsubscribe),
+        takeUntil(this._unsubscribe),
         switchMap(data => {
           // eslint-disable-next-line @typescript-eslint/dot-notation
           this.day = data['day'];
 
           switch (this.day) {
             case Day.thursday:
-              return this.eventDataService.getThursday();
+              return this._eventDataService.getThursday();
             case Day.friday:
-              return this.eventDataService.getFriday();
+              return this._eventDataService.getFriday();
             case Day.saturday:
-              return this.eventDataService.getSaturday();
+              return this._eventDataService.getSaturday();
             default:
               throw Error('Unknown date');
           }
         })
       )
       .subscribe(async timeslots => {
-        this.timeslots = timeslots;
+        this._timeslots = timeslots;
 
         this.setFilteredItems();
 
@@ -73,19 +73,19 @@ export class DayPage implements OnInit, OnDestroy {
   }
 
   ionViewWillEnter(): void {
-    this.storageService
+    this._storageService
       .getFavorites()
-      .pipe(takeUntil(this.unsubscribe))
+      .pipe(takeUntil(this._unsubscribe))
       .subscribe(favs => (this.favorites = favs));
   }
 
   ngOnDestroy(): void {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
+    this._unsubscribe.next();
+    this._unsubscribe.complete();
   }
 
   onItemSelected(itemId: number): void {
-    this.router.navigate([itemId], { relativeTo: this.activatedRoute });
+    this._router.navigate([itemId], { relativeTo: this._activatedRoute });
   }
 
   onToggleFavorites(): void {
@@ -96,9 +96,9 @@ export class DayPage implements OnInit, OnDestroy {
 
   private setFilteredItems() {
     const newItems = this.isFavoritesFilterActive
-      ? this.timeslots.filter(t => this.favorites?.includes(t.id))
-      : this.timeslots;
+      ? this._timeslots.filter(t => this.favorites?.includes(t.id))
+      : this._timeslots;
 
-    this.timeslotsToShow.next(newItems);
+    this._timeslotsToShow.next(newItems);
   }
 }

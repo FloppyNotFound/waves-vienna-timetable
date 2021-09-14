@@ -7,7 +7,7 @@ import { map, switchMap } from 'rxjs/operators';
 export class StorageService {
   readonly favoritesKey = 'favorites';
 
-  private storage: Storage | null = null;
+  private _storage: Storage | null = null;
 
   constructor(private storageService: Storage) {
     this.init();
@@ -16,7 +16,7 @@ export class StorageService {
   async init(): Promise<void> {
     // If using, define drivers here: await this.storage.defineDriver(/*...*/);
     const storage = await this.storageService.create();
-    this.storage = storage;
+    this._storage = storage;
   }
 
   // Create and expose methods that users of this service can
@@ -31,9 +31,9 @@ export class StorageService {
         return newFavs;
       }),
       switchMap(newFavs =>
-        !this.storage
+        !this._storage
           ? throwError('Storage not ready')
-          : from(this.storage.set(this.favoritesKey, newFavs)).pipe(
+          : from(this._storage.set(this.favoritesKey, newFavs)).pipe(
               map(() => newFavs)
             )
       )
@@ -41,11 +41,11 @@ export class StorageService {
   }
 
   getFavorites(): Observable<number[]> {
-    if (!this.storage) {
+    if (!this._storage) {
       return throwError('Storage not ready');
     }
 
-    return from(this.storage.get(this.favoritesKey)).pipe(
+    return from(this._storage.get(this.favoritesKey)).pipe(
       map(favorites => favorites ?? [])
     );
   }
