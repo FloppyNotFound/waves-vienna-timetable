@@ -3,15 +3,14 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { Observable, Subject } from 'rxjs';
-import { switchMap, takeUntil, tap } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { TimeSlot } from '../backend-models/backend-models.interface';
 import { EventDataService } from '../services/event-data.service';
 import { Day } from '../tabs/models/day.enum';
 
 @Component({
   selector: 'app-day',
-  templateUrl: 'day.page.html',
-  styleUrls: ['day.page.scss']
+  templateUrl: 'day.page.html'
 })
 export class DayPage implements OnInit, OnDestroy {
   timeslotsToShow$: Observable<TimeSlot[]>;
