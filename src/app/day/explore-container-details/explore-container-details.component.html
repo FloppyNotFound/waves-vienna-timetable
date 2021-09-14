@@ -22,13 +22,13 @@
     <ion-grid>
       <ion-row>
         <ion-col>
-          <ion-card>
+          <ion-card id="detail-card">
             <ion-card-header>
               <ion-card-title>{{ item.title }}</ion-card-title>
               <ion-card-subtitle>
-                <span>{{ item.start | date: "EEEE HH:mm" }}</span>
+                <span>{{ item.start | date: 'EEEE HH:mm' }}</span>
                 <span>&mdash;</span>
-                <span>{{ item.end | date: "HH:mm" }}</span>
+                <span>{{ item.end | date: 'HH:mm' }}</span>
                 <span>h</span>
                 <span>, {{ item.terms.wcs_room[0].name }}</span>
               </ion-card-subtitle>

@@ -9,7 +9,8 @@ import { EventDataService } from './../../services/event-data.service';
 
 @Component({
   selector: 'app-explore-container-details',
-  templateUrl: './explore-container-details.component.html'
+  templateUrl: './explore-container-details.component.html',
+  styleUrls: ['./explore-container-details.component.scss']
 })
 export class ExploreContainerDetailsComponent implements OnInit, OnDestroy {
   isFavorite: boolean;
