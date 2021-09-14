@@ -10,16 +10,16 @@
             <h2>
               <span>{{ slot.title }}</span>
               <ion-icon
-                *ngIf="slot.id | isFavorite: favorites"
+                *ngIf="favorites && (slot.id | isFavorite: favorites)"
                 name="star"
                 slot="icon-only"
                 class="ion-float-right"
               ></ion-icon>
             </h2>
             <h3>
-              <span>{{ slot.start | date: "EEEE HH:mm" }}</span>
+              <span>{{ slot.start | date: 'EEEE HH:mm' }}</span>
               <span>&mdash;</span>
-              <span>{{ slot.end | date: "HH:mm" }}</span>
+              <span>{{ slot.end | date: 'HH:mm' }}</span>
               <span>h</span>
               <span>, {{ slot.terms.wcs_room[0].slug }}</span>
             </h3>
