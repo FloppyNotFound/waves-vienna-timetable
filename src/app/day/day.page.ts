@@ -48,9 +48,10 @@ export class DayPage implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.unsubscribe),
         switchMap(data => {
-          this.day = data.day;
+          // eslint-disable-next-line @typescript-eslint/dot-notation
+          this.day = data['day'];
 
-          switch (data.day) {
+          switch (this.day) {
             case Day.thursday:
               return this.eventDataService.getThursday();
             case Day.friday:

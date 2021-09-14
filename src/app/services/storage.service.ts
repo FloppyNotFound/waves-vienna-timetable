@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage-angular';
-import { from, Observable } from 'rxjs';
+import { from, Observable, throwError } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
 @Injectable({ providedIn: 'root' })
@@ -31,14 +31,20 @@ export class StorageService {
         return newFavs;
       }),
       switchMap(newFavs =>
-        from(this.storage?.set(this.favoritesKey, newFavs)).pipe(
-          map(() => newFavs)
-        )
+        !this.storage
+          ? throwError('Storage not ready')
+          : from(this.storage.set(this.favoritesKey, newFavs)).pipe(
+              map(() => newFavs)
+            )
       )
     );
   }
 
   getFavorites(): Observable<number[]> {
+    if (!this.storage) {
+      return throwError('Storage not ready');
+    }
+
     return from(this.storage.get(this.favoritesKey)).pipe(
       map(favorites => favorites ?? [])
     );
