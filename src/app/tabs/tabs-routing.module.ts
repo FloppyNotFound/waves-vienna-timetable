@@ -6,18 +6,17 @@ import { TabsPage } from './tabs.page';
 const getDayRoute = (day: Day): Routes => [
   {
     path: '',
-    loadChildren: () =>
-      import('../day/day.module').then((m) => m.DayPageModule),
+    loadChildren: () => import('../day/day.module').then(m => m.DayPageModule),
     data: { day },
-    pathMatch: 'full',
+    pathMatch: 'full'
   },
   {
     path: ':id',
     loadChildren: () =>
       import(
         '../day/explore-container-details/explore-container-details.module'
-      ).then((m) => m.ExploreContainerDetailsModule),
-  },
+      ).then(m => m.ExploreContainerDetailsModule)
+  }
 ];
 
 const routes: Routes = [
@@ -27,36 +26,36 @@ const routes: Routes = [
     children: [
       {
         path: 'thursday',
-        children: getDayRoute(Day.thursday),
+        children: getDayRoute(Day.thursday)
       },
       {
         path: 'friday',
-        children: getDayRoute(Day.friday),
+        children: getDayRoute(Day.friday)
       },
       {
         path: 'saturday',
-        children: getDayRoute(Day.saturday),
+        children: getDayRoute(Day.saturday)
       },
       {
         path: 'about',
         loadChildren: () =>
-          import('../about/about.module').then((m) => m.AboutPageModule),
+          import('../about/about.module').then(m => m.AboutPageModule)
       },
       {
         path: '',
         redirectTo: '/tabs/thursday',
-        pathMatch: 'full',
-      },
-    ],
+        pathMatch: 'full'
+      }
+    ]
   },
   {
     path: '',
     redirectTo: '/tabs/thursday',
-    pathMatch: 'full',
-  },
+    pathMatch: 'full'
+  }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(routes)]
 })
 export class TabsPageRoutingModule {}

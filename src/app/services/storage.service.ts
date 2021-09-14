@@ -23,14 +23,14 @@ export class StorageService {
   // call, for example:
   setFavorite(id: number, isActive: boolean): Observable<number[]> {
     return this.getFavorites().pipe(
-      map((favorites) => {
+      map(favorites => {
         const newFavs = isActive
           ? [...favorites, id]
-          : [...favorites].filter((f) => f !== id);
+          : [...favorites].filter(f => f !== id);
 
         return newFavs;
       }),
-      switchMap((newFavs) =>
+      switchMap(newFavs =>
         from(this.storage?.set(this.favoritesKey, newFavs)).pipe(
           map(() => newFavs)
         )
@@ -40,11 +40,11 @@ export class StorageService {
 
   getFavorites(): Observable<number[]> {
     return from(this.storage.get(this.favoritesKey)).pipe(
-      map((favorites) => favorites ?? [])
+      map(favorites => favorites ?? [])
     );
   }
 
   checkIsFavorite(id: number): Observable<boolean> {
-    return this.getFavorites().pipe(map((favs) => favs.includes(id)));
+    return this.getFavorites().pipe(map(favs => favs.includes(id)));
   }
 }

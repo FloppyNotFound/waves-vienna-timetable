@@ -27,7 +27,7 @@ export class EventDataService {
   }
 
   getItem(id: number): Observable<TimeSlot | undefined> {
-    return this.getData().pipe(map((items) => items.find((d) => d.id === id)));
+    return this.getData().pipe(map(items => items.find(d => d.id === id)));
   }
 
   private getData(): Observable<TimeSlot[]> {
@@ -37,16 +37,16 @@ export class EventDataService {
 
     return this.backendService
       .get<TimeSlot[]>(this.uri)
-      .pipe(map((data) => (this.data = data)));
+      .pipe(map(data => (this.data = data)));
   }
 
   private getDataForDay(
     day: 'donnerstag' | 'freitag' | 'samstag'
   ): Observable<TimeSlot[]> {
     return this.getData().pipe(
-      map((data) => data.filter((d) => d.terms.wcs_type[0].slug === day)),
-      map((data) => {
-        data.forEach((d) => {
+      map(data => data.filter(d => d.terms.wcs_type[0].slug === day)),
+      map(data => {
+        data.forEach(d => {
           d.start = d.start.replace('+00:00', '+02:00');
           d.end = d.end.replace('+00:00', '+02:00');
 

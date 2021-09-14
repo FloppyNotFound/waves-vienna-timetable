@@ -11,7 +11,7 @@ import { Day } from '../tabs/models/day.enum';
 @Component({
   selector: 'app-day',
   templateUrl: 'day.page.html',
-  styleUrls: ['day.page.scss'],
+  styleUrls: ['day.page.scss']
 })
 export class DayPage implements OnInit, OnDestroy {
   timeslotsToShow$: Observable<TimeSlot[]>;
@@ -40,7 +40,7 @@ export class DayPage implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     const loading = await this.loadingController.create({
-      message: 'Please wait...',
+      message: 'Please wait...'
     });
 
     await loading.present();
@@ -48,7 +48,7 @@ export class DayPage implements OnInit, OnDestroy {
     this.activatedRoute.data
       .pipe(
         takeUntil(this.unsubscribe),
-        switchMap((data) => {
+        switchMap(data => {
           this.day = data.day;
 
           switch (data.day) {
@@ -63,7 +63,7 @@ export class DayPage implements OnInit, OnDestroy {
           }
         })
       )
-      .subscribe(async (timeslots) => {
+      .subscribe(async timeslots => {
         this.timeslots = timeslots;
 
         this.setFilteredItems();
@@ -76,7 +76,7 @@ export class DayPage implements OnInit, OnDestroy {
     this.storageService
       .getFavorites()
       .pipe(takeUntil(this.unsubscribe))
-      .subscribe((favs) => (this.favorites = favs));
+      .subscribe(favs => (this.favorites = favs));
   }
 
   ngOnDestroy(): void {
@@ -96,7 +96,7 @@ export class DayPage implements OnInit, OnDestroy {
 
   private setFilteredItems() {
     const newItems = this.isFavoritesFilterActive
-      ? this.timeslots.filter((t) => this.favorites?.includes(t.id))
+      ? this.timeslots.filter(t => this.favorites?.includes(t.id))
       : this.timeslots;
 
     this.timeslotsToShow.next(newItems);

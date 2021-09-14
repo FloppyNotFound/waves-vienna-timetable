@@ -10,7 +10,7 @@ import { EventDataService } from './../../services/event-data.service';
 @Component({
   selector: 'app-explore-container-details',
   templateUrl: './explore-container-details.component.html',
-  styleUrls: ['./explore-container-details.component.scss'],
+  styleUrls: ['./explore-container-details.component.scss']
 })
 export class ExploreContainerDetailsComponent implements OnInit, OnDestroy {
   isFavorite: boolean;
@@ -29,18 +29,18 @@ export class ExploreContainerDetailsComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     const loading = await this.loadingController.create({
-      message: 'Please wait...',
+      message: 'Please wait...'
     });
 
     await loading.present();
 
     this.route.paramMap
       .pipe(
-        map((paramMap) => Number(paramMap.get('id'))),
-        switchMap((id) => this.eventDataService.getItem(id)),
-        tap((item) => (this.item = item)),
-        switchMap((item) => this.storageService.checkIsFavorite(item.id)),
-        tap((isFavorite) => (this.isFavorite = isFavorite))
+        map(paramMap => Number(paramMap.get('id'))),
+        switchMap(id => this.eventDataService.getItem(id)),
+        tap(item => (this.item = item)),
+        switchMap(item => this.storageService.checkIsFavorite(item.id)),
+        tap(isFavorite => (this.isFavorite = isFavorite))
       )
       .subscribe(() => {
         loading.dismiss();
@@ -73,7 +73,7 @@ export class ExploreContainerDetailsComponent implements OnInit, OnDestroy {
     const toast = await this.toastController.create({
       message: msg,
       duration: 2000,
-      color: isFavActive ? 'success' : 'dark',
+      color: isFavActive ? 'success' : 'dark'
     });
 
     toast.present();

@@ -9,6 +9,6 @@ import { IsFavoritePipe } from './pipes/is-favorite.pipe';
 
 @NgModule({
   imports: [IonicModule, CommonModule, FormsModule, DayPageRoutingModule],
-  declarations: [DayPage, ExploreContainerComponent, IsFavoritePipe],
+  declarations: [DayPage, ExploreContainerComponent, IsFavoritePipe]
 })
 export class DayPageModule {}

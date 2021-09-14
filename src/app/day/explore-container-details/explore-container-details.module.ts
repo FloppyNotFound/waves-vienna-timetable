@@ -6,6 +6,6 @@ import { ExploreContainerDetailsRoutingModule } from './explore-container-detail
 
 @NgModule({
   declarations: [ExploreContainerDetailsComponent],
-  imports: [CommonModule, IonicModule, ExploreContainerDetailsRoutingModule],
+  imports: [CommonModule, IonicModule, ExploreContainerDetailsRoutingModule]
 })
 export class ExploreContainerDetailsModule {}

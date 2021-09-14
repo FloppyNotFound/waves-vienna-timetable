@@ -5,12 +5,12 @@ import { ExploreContainerDetailsComponent } from './explore-container-details.co
 const routes: Routes = [
   {
     path: '',
-    component: ExploreContainerDetailsComponent,
-  },
+    component: ExploreContainerDetailsComponent
+  }
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class ExploreContainerDetailsRoutingModule {}
