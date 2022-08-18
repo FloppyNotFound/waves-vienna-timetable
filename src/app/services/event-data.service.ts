@@ -57,8 +57,7 @@ export class EventDataService {
 
           d.excerpt = d.excerpt.replace('<p>', '');
           d.excerpt = d.excerpt.replace('</p>', '');
-          d.excerpt = d.excerpt.replace('<img>', '');
-          d.excerpt = d.excerpt.replace('</img>', '');
+          d.excerpt = d.excerpt.replace(/<img .*?>/g, '');
           d.excerpt = d.excerpt.replace('&#8230;', '');
           d.excerpt = d.excerpt.replace('&nbsp;', ' ');
         });
