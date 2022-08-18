@@ -8,7 +8,7 @@ import { TimeSlot } from '../backend-models/backend-models.interface';
 export class EventDataService {
   // private readonly uri = 'http://127.0.0.1:8787';
   private readonly _uri =
-    'https://waves-vienna-timeline-proxy.floppynotfound.workers.dev';
+    'https://waves-vienna-timetable-proxy.floppynotfound.workers.dev';
 
   private _data: TimeSlot[] | undefined;
 
