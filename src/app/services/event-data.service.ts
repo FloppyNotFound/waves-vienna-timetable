@@ -50,14 +50,17 @@ export class EventDataService {
           d.start = d.start.replace('+00:00', '+02:00');
           d.end = d.end.replace('+00:00', '+02:00');
 
-          d.excerpt = d.excerpt.replace('<p>', '');
-          d.excerpt = d.excerpt.replace('</p>', '');
-          d.excerpt = d.excerpt.replace('&#8230;', '');
-          d.excerpt = d.excerpt.replace('&nbsp;', ' ');
-
+          // Get image out first, before removing the image tag
           if (!d.thumbnail) {
             d.thumbnail = this.getThumbnailFromExcerpt(d.excerpt);
           }
+
+          d.excerpt = d.excerpt.replace('<p>', '');
+          d.excerpt = d.excerpt.replace('</p>', '');
+          d.excerpt = d.excerpt.replace('<img>', '');
+          d.excerpt = d.excerpt.replace('</img>', '');
+          d.excerpt = d.excerpt.replace('&#8230;', '');
+          d.excerpt = d.excerpt.replace('&nbsp;', ' ');
         });
 
         return data;
