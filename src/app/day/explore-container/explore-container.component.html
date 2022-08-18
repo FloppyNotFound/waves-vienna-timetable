@@ -23,7 +23,7 @@
               <span>h</span>
               <span>, {{ slot.terms.wcs_room[0].slug }}</span>
             </h3>
-            <p>{{ slot.excerpt }}</p>
+            <p>{{ slot.excerpt | stripHtml }}</p>
           </ion-label>
         </ion-item>
       </ng-container>

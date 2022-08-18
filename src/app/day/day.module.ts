@@ -6,9 +6,15 @@ import { DayPage } from './day.page';
 import { ExploreContainerComponent } from './explore-container/explore-container.component';
 import { DayPageRoutingModule } from './day-routing.module';
 import { IsFavoritePipe } from './pipes/is-favorite.pipe';
+import { StripHtmlPipe } from './pipes/strip-html.pipe';
 
 @NgModule({
   imports: [IonicModule, CommonModule, FormsModule, DayPageRoutingModule],
-  declarations: [DayPage, ExploreContainerComponent, IsFavoritePipe]
+  declarations: [
+    DayPage,
+    ExploreContainerComponent,
+    IsFavoritePipe,
+    StripHtmlPipe
+  ]
 })
 export class DayPageModule {}
