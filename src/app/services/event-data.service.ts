@@ -54,10 +54,21 @@ export class EventDataService {
           d.excerpt = d.excerpt.replace('</p>', '');
           d.excerpt = d.excerpt.replace('&#8230;', '');
           d.excerpt = d.excerpt.replace('&nbsp;', ' ');
+
+          if (!d.thumbnail) {
+            d.thumbnail = this.getThumbnailFromExcerpt(d.excerpt);
+          }
         });
 
         return data;
       })
     );
+  }
+
+  private getThumbnailFromExcerpt(excerpt: string): string {
+    const regex = new RegExp('(?<=src=")(.*?)(?=")');
+    const result = regex.exec(excerpt);
+
+    return result && result.length >= 1 ? result[1] : '';
   }
 }
