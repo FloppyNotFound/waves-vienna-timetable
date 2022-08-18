@@ -33,7 +33,7 @@
                 <span>, {{ item.terms.wcs_room[0].name }}</span>
               </ion-card-subtitle>
             </ion-card-header>
-            <ion-img [src]="item.thumbnail"></ion-img>
+            <ion-img *ngIf="item.thumbnail" [src]="item.thumbnail"></ion-img>
             <ion-card-content>
               <p [innerHtml]="item.excerpt"></p>
               <a
