@@ -50,8 +50,10 @@ export class EventDataService {
           d.start = d.start.replace('+00:00', '+02:00');
           d.end = d.end.replace('+00:00', '+02:00');
 
-          d.excerpt = d.excerpt.replace(/<.*?>/g, '');
+          d.excerpt = d.excerpt.replace('<p>', '');
+          d.excerpt = d.excerpt.replace('</p>', '');
           d.excerpt = d.excerpt.replace('&#8230;', '');
+          d.excerpt = d.excerpt.replace('&nbsp;', ' ');
         });
 
         return data;
