@@ -23,7 +23,6 @@
         "files": [
           "/assets/**",
           "/svg/**",
-
           "/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
         ]
       }
@@ -32,7 +31,10 @@
   "dataGroups": [
     {
       "name": "waves-images",
-      "urls": ["https://www.wavesvienna.com/wp-content/uploads"],
+      "urls": [
+        "https://www.wavesvienna.com/wp-content/uploads/**/*.jpg",
+        "https://www.wavesvienna.com/wp-content/uploads/**/*.jpeg"
+      ],
       "cacheConfig": {
         "strategy": "performance",
         "maxSize": 200,
@@ -41,7 +43,9 @@
     },
     {
       "name": "waves-timetable",
-      "urls": ["https://waves-vienna-worker.floppynotfound.workers.dev/"],
+      "urls": [
+        "https://waves-vienna-timetable-proxy.floppynotfound.workers.dev"
+      ],
       "cacheConfig": {
         "strategy": "freshness",
         "maxSize": 200,
