@@ -36,7 +36,8 @@
         "https://www.wavesvienna.com/wp-content/uploads/**/*.jpeg"
       ],
       "cacheConfig": {
-        "strategy": "performance",
+        "strategy": "freshness",
+        "timeout": "0u",
         "maxSize": 200,
         "maxAge": "1d"
       }
