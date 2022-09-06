@@ -4,7 +4,7 @@
       <ng-container *ngFor="let slot of timeslots">
         <ion-item detail button (click)="onItemSelected(slot.id)">
           <ion-avatar slot="start">
-            <img title="thumbnail" [src]="slot.thumbnail" />
+            <img title="thumbnail" [src]="slot.thumbnail" loading="lazy" />
           </ion-avatar>
           <ion-label>
             <h2>
