@@ -17,7 +17,7 @@ export class ExploreContainerDetailsComponent implements OnInit, OnDestroy {
 
   item: TimeSlot;
 
-  private readonly _unsubscribe = new Subject();
+  private readonly _unsubscribe = new Subject<void>();
 
   constructor(
     private _eventDataService: EventDataService,
@@ -27,7 +27,7 @@ export class ExploreContainerDetailsComponent implements OnInit, OnDestroy {
     private _storageService: StorageService
   ) {}
 
-  async ngOnInit() {
+  async ngOnInit(): Promise<void> {
     const loading = await this._loadingController.create({
       message: 'Please wait...'
     });
@@ -48,7 +48,7 @@ export class ExploreContainerDetailsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this._unsubscribe.next();
+    this._unsubscribe.next(void 0);
     this._unsubscribe.complete();
   }
 
