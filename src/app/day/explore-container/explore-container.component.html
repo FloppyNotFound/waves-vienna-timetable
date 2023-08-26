@@ -21,9 +21,9 @@
               <span>&mdash;</span>
               <span>{{ slot.end | date: 'HH:mm' }}</span>
               <span>h</span>
-              <!-- <span>, {{ slot.terms.wcs_room[0].slug }}</span> -->
+              <span>, {{ slot.venue }}</span>
             </h3>
-            <p>{{ slot.excerpt | stripHtml }}</p>
+            <p>{{ slot.showcase }}</p>
           </ion-label>
         </ion-item>
       </ng-container>
