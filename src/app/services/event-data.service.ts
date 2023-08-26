@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of as observableOf, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Show } from '../backend-models/show';
 import { ShowsResponse } from '../backend-models/shows-response';
 
@@ -88,7 +88,8 @@ export class EventDataService {
             (dataDay === day + 1 && dataHour < dayBreakHour)
           );
         })
-      )
+      ),
+      tap(data => data.forEach(d => (d.thumbnail = 'assets/icon/favicon.png')))
     );
   }
 
