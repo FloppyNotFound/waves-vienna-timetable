@@ -1,52 +1,57 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of as observableOf } from 'rxjs';
+import { Observable, of as observableOf, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { TimeSlot } from '../backend-models/backend-models.interface';
+import { Show } from '../backend-models/show';
+import { ShowsResponse } from '../backend-models/shows-response';
 
 @Injectable({ providedIn: 'root' })
 export class EventDataService {
   // private readonly uri = 'http://127.0.0.1:8787';
   private readonly _uri =
-    'https://waves-vienna-timetable-proxy.floppynotfound.workers.dev';
+    'https://waves-vienna-timetable-api.floppynotfound.workers.dev/';
 
-  private _data: TimeSlot[] | undefined;
+  private _data: Show[] | undefined;
 
   constructor(private backendService: HttpClient) {}
 
-  getThursday(): Observable<TimeSlot[]> {
+  getThursday(): Observable<Show[]> {
     return this.getDataForDay('donnerstag');
   }
 
-  getFriday(): Observable<TimeSlot[]> {
+  getFriday(): Observable<Show[]> {
     return this.getDataForDay('freitag');
   }
 
-  getSaturday(): Observable<TimeSlot[]> {
+  getSaturday(): Observable<Show[]> {
     return this.getDataForDay('samstag');
   }
 
-  getItem(id: number): Observable<TimeSlot | undefined> {
-    return this.getData().pipe(map(items => items.find(d => d.id === id)));
+  getItem(id: number): Observable<Show | undefined> {
+    console.log('todo: get item', id);
+    return of(void 0); // this.getData().pipe(map(items => items.find(d => d.id === id)));
   }
 
-  private getData(): Observable<TimeSlot[]> {
+  private getData(): Observable<Show[]> {
     if (this._data) {
       return observableOf(this._data);
     }
 
     return this.backendService
-      .get<TimeSlot[]>(this._uri)
-      .pipe(map(data => (this._data = data)));
+      .get<ShowsResponse>(this._uri)
+      .pipe(map(data => (this._data = data.shows)));
   }
 
   private getDataForDay(
     day: 'donnerstag' | 'freitag' | 'samstag'
-  ): Observable<TimeSlot[]> {
-    return this.getData().pipe(
-      map(data => data.filter(d => d.terms.wcs_type[0].slug === day)),
-      map(data => {
+  ): Observable<Show[]> {
+    console.log('todo: handle day', day);
+    return this.getData()
+      .pipe
+      // map(data => data.filter(d => d.terms.wcs_type[0].slug === day)),
+      /* map(data => {
         data.forEach(d => {
+
           d.start = d.start.replace('+00:00', '+02:00');
           d.end = d.end.replace('+00:00', '+02:00');
 
@@ -66,14 +71,14 @@ export class EventDataService {
         });
 
         return data;
-      })
-    );
+      }) */
+      ();
   }
 
-  private getThumbnailFromExcerpt(excerpt: string): string {
+  /*  private getThumbnailFromExcerpt(excerpt: string): string {
     const regex = new RegExp('(?<=src=")(.*?)(?=")');
     const result = regex.exec(excerpt);
 
     return result && result.length >= 1 ? result[1] : '';
-  }
+  } */
 }

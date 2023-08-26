@@ -8,7 +8,7 @@
           </ion-avatar>
           <ion-label>
             <h2>
-              <span>{{ slot.title }}</span>
+              <span>{{ slot.artistName }}</span>
               <ion-icon
                 *ngIf="favorites && (slot.id | isFavorite: favorites)"
                 name="star"
@@ -21,7 +21,7 @@
               <span>&mdash;</span>
               <span>{{ slot.end | date: 'HH:mm' }}</span>
               <span>h</span>
-              <span>, {{ slot.terms.wcs_room[0].slug }}</span>
+              <!-- <span>, {{ slot.terms.wcs_room[0].slug }}</span> -->
             </h3>
             <p>{{ slot.excerpt | stripHtml }}</p>
           </ion-label>

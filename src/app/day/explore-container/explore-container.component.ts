@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TimeSlot } from '../../backend-models/backend-models.interface';
+import { Show } from '../../backend-models/show';
 
 @Component({
   selector: 'app-explore-container',
@@ -8,13 +8,13 @@ import { TimeSlot } from '../../backend-models/backend-models.interface';
   styleUrls: ['./explore-container.component.scss']
 })
 export class ExploreContainerComponent {
-  @Input() timeslots$: Observable<TimeSlot[]>;
+  @Input() timeslots$: Observable<Show[]>;
 
-  @Input() favorites: number[] | undefined;
+  @Input() favorites: string[] | undefined;
 
-  @Output() timeslotSelected = new EventEmitter<number>();
+  @Output() readonly timeslotSelected = new EventEmitter<string>();
 
-  onItemSelected(itemId: number): void {
+  onItemSelected(itemId: string): void {
     this.timeslotSelected.emit(itemId);
   }
 }
