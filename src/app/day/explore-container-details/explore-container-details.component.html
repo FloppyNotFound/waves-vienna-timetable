@@ -1,47 +1,49 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button [defaultHref]="'/tabs/thursday'"></ion-back-button>
-    </ion-buttons>
-    <ion-title>{{ item?.title }}</ion-title>
-    <ion-buttons slot="primary">
-      <ion-button (click)="onToggleFavorite()">
-        <ion-icon *ngIf="isFavorite" name="star" slot="icon-only"></ion-icon>
-        <ion-icon
-          *ngIf="!isFavorite"
-          name="star-outline"
-          slot="icon-only"
-        ></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+<ng-container *ngIf="item"
+  ><ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button [defaultHref]="'/tabs/thursday'"></ion-back-button>
+      </ion-buttons>
+      <ion-title>{{ item.artistName }}</ion-title>
+      <ion-buttons slot="primary">
+        <ion-button (click)="onToggleFavorite()">
+          <ion-icon *ngIf="isFavorite" name="star" slot="icon-only"></ion-icon>
+          <ion-icon
+            *ngIf="!isFavorite"
+            name="star-outline"
+            slot="icon-only"
+          ></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
 
-<ng-container *ngIf="item">
   <ion-content>
     <ion-grid>
       <ion-row>
         <ion-col>
           <ion-card id="detail-card">
             <ion-card-header>
-              <ion-card-title>{{ item.title }}</ion-card-title>
+              <ion-card-title>{{ item.artistName }}</ion-card-title>
               <ion-card-subtitle>
                 <span>{{ item.start | date: 'EEEE HH:mm' }}</span>
                 <span>&mdash;</span>
                 <span>{{ item.end | date: 'HH:mm' }}</span>
                 <span>h</span>
-                <span>, {{ item.terms.wcs_room[0].name }}</span>
+                <span>, {{ item.venue }}</span>
               </ion-card-subtitle>
             </ion-card-header>
-            <ion-img *ngIf="item.thumbnail" [src]="item.thumbnail"></ion-img>
 
             <ion-card-content>
-              <p [innerHtml]="item.excerpt"></p>
+              <p [innerHtml]="item.showcase"></p>
               <a
-                [href]="item.permalink"
+                [href]="
+                  'https://procfu.com/waves-2023-shows/artist-details/' +
+                  item.id
+                "
                 rel="noopener noreferrer"
                 target="_blank"
-                >mehr</a
+                >more</a
               >
             </ion-card-content>
           </ion-card>

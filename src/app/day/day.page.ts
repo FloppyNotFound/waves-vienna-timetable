@@ -4,28 +4,28 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { Observable, Subject } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
-import { TimeSlot } from '../backend-models/backend-models.interface';
 import { EventDataService } from '../services/event-data.service';
 import { Day } from '../tabs/models/day.enum';
+import { Show } from '../backend-models/show';
 
 @Component({
   selector: 'app-day',
   templateUrl: 'day.page.html'
 })
 export class DayPage implements OnInit, OnDestroy {
-  timeslotsToShow$: Observable<TimeSlot[]>;
+  timeslotsToShow$: Observable<Show[]>;
 
   day: Day;
 
-  favorites: number[];
+  favorites: string[];
 
   isFavoritesFilterActive: boolean;
 
-  private readonly _timeslotsToShow = new Subject<TimeSlot[]>();
+  private readonly _timeslotsToShow = new Subject<Show[]>();
 
   private readonly _unsubscribe = new Subject<void>();
 
-  private _timeslots: TimeSlot[];
+  private _timeslots: Show[];
 
   constructor(
     private _router: Router,
@@ -72,6 +72,11 @@ export class DayPage implements OnInit, OnDestroy {
       });
   }
 
+  ngOnDestroy(): void {
+    this._unsubscribe.next();
+    this._unsubscribe.complete();
+  }
+
   ionViewWillEnter(): void {
     this._storageService
       .getFavorites()
@@ -79,12 +84,7 @@ export class DayPage implements OnInit, OnDestroy {
       .subscribe(favs => (this.favorites = favs));
   }
 
-  ngOnDestroy(): void {
-    this._unsubscribe.next();
-    this._unsubscribe.complete();
-  }
-
-  onItemSelected(itemId: number): void {
+  onItemSelected(itemId: string): void {
     this._router.navigate([itemId], { relativeTo: this._activatedRoute });
   }
 

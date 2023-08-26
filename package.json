@@ -5,6 +5,9 @@
   "homepage": "https://github.com/FloppyNotFound/waves-vienna-timetable",
   "private": true,
   "repository": "https://github.com/FloppyNotFound/waves-vienna-timetable",
+  "engines": {
+    "node": ">=18.16.0"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

@@ -4,8 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { LoadingController, ToastController } from '@ionic/angular';
 import { Subject } from 'rxjs';
 import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
-import { TimeSlot } from './../../backend-models/backend-models.interface';
 import { EventDataService } from './../../services/event-data.service';
+import { Show } from '../../backend-models/show';
 
 @Component({
   selector: 'app-explore-container-details',
@@ -15,7 +15,7 @@ import { EventDataService } from './../../services/event-data.service';
 export class ExploreContainerDetailsComponent implements OnInit, OnDestroy {
   isFavorite: boolean;
 
-  item: TimeSlot;
+  item: Show;
 
   private readonly _unsubscribe = new Subject<void>();
 
@@ -36,9 +36,9 @@ export class ExploreContainerDetailsComponent implements OnInit, OnDestroy {
 
     this._route.paramMap
       .pipe(
-        map(paramMap => Number(paramMap.get('id'))),
+        map(paramMap => <string>paramMap.get('id')),
         switchMap(id => this._eventDataService.getItem(id)),
-        tap(item => (this.item = item as TimeSlot)),
+        tap(item => (this.item = <Show>item)),
         switchMap(() => this._storageService.checkIsFavorite(this.item.id)),
         tap(isFavorite => (this.isFavorite = isFavorite))
       )
