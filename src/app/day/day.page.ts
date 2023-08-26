@@ -72,16 +72,16 @@ export class DayPage implements OnInit, OnDestroy {
       });
   }
 
+  ngOnDestroy(): void {
+    this._unsubscribe.next();
+    this._unsubscribe.complete();
+  }
+
   ionViewWillEnter(): void {
     this._storageService
       .getFavorites()
       .pipe(takeUntil(this._unsubscribe))
       .subscribe(favs => (this.favorites = favs));
-  }
-
-  ngOnDestroy(): void {
-    this._unsubscribe.next();
-    this._unsubscribe.complete();
   }
 
   onItemSelected(itemId: string): void {
