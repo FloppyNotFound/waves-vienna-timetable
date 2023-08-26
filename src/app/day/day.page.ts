@@ -84,7 +84,7 @@ export class DayPage implements OnInit, OnDestroy {
     this._unsubscribe.complete();
   }
 
-  onItemSelected(itemId: number): void {
+  onItemSelected(itemId: string): void {
     this._router.navigate([itemId], { relativeTo: this._activatedRoute });
   }
 

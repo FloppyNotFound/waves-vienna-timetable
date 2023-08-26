@@ -5,6 +5,12 @@ import { map } from 'rxjs/operators';
 import { Show } from '../backend-models/show';
 import { ShowsResponse } from '../backend-models/shows-response';
 
+enum Day {
+  Thursday = 4,
+  Friday = 5,
+  Saturday = 6
+}
+
 @Injectable({ providedIn: 'root' })
 export class EventDataService {
   // private readonly uri = 'http://127.0.0.1:8787';
@@ -16,15 +22,15 @@ export class EventDataService {
   constructor(private backendService: HttpClient) {}
 
   getThursday(): Observable<Show[]> {
-    return this.getDataForDay('donnerstag');
+    return this.getDataForDay(Day.Thursday);
   }
 
   getFriday(): Observable<Show[]> {
-    return this.getDataForDay('freitag');
+    return this.getDataForDay(Day.Friday);
   }
 
   getSaturday(): Observable<Show[]> {
-    return this.getDataForDay('samstag');
+    return this.getDataForDay(Day.Saturday);
   }
 
   getItem(id: number): Observable<Show | undefined> {
@@ -42,12 +48,8 @@ export class EventDataService {
       .pipe(map(data => (this._data = data.shows)));
   }
 
-  private getDataForDay(
-    day: 'donnerstag' | 'freitag' | 'samstag'
-  ): Observable<Show[]> {
-    console.log('todo: handle day', day);
-    return this.getData()
-      .pipe
+  private getDataForDay(day: Day): Observable<Show[]> {
+    return this.getData().pipe(
       // map(data => data.filter(d => d.terms.wcs_type[0].slug === day)),
       /* map(data => {
         data.forEach(d => {
@@ -72,7 +74,22 @@ export class EventDataService {
 
         return data;
       }) */
-      ();
+      map(data =>
+        data.filter(d => {
+          const dataDate = new Date(d.start);
+          const dataDay = dataDate.getDay();
+          const dataHour = dataDate.getHours();
+
+          // Show night shows at the previous day
+          const dayBreakHour = 5;
+
+          return (
+            (dataDay === day && dataHour > dayBreakHour) ||
+            (dataDay === day + 1 && dataHour < dayBreakHour)
+          );
+        })
+      )
+    );
   }
 
   /*  private getThumbnailFromExcerpt(excerpt: string): string {
