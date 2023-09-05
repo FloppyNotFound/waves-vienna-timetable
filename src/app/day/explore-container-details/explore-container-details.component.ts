@@ -2,8 +2,8 @@ import { StorageService } from './../../services/storage.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LoadingController, ToastController } from '@ionic/angular';
-import { Observable, Subject } from 'rxjs';
-import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
+import { Observable, Subject, of } from 'rxjs';
+import { catchError, map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { EventDataService } from './../../services/event-data.service';
 import { Show } from '../../backend-models/show';
 import { SpotifyDataService } from '../services/spotify-data.service';
@@ -89,8 +89,8 @@ export class ExploreContainerDetailsComponent implements OnInit, OnDestroy {
   }
 
   private getSpotifyData(artistName: string): Observable<SpotifyArtist | null> {
-    return this._spotifyDataService.getData(
-      artistName.replace(/\(.*\)/g, '').trim()
-    );
+    return this._spotifyDataService
+      .getData(artistName.replace(/\(.*\)/g, '').trim())
+      .pipe(catchError(() => of(null)));
   }
 }
