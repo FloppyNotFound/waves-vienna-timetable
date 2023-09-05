@@ -50,9 +50,7 @@ export class ExploreContainerDetailsComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         loading.dismiss();
 
-        this.spotifyArtist$ = this.getSpotifyData(this.item.artistName).pipe(
-          tap(res => console.log('res', res))
-        );
+        this.spotifyArtist$ = this.getSpotifyData(this.item.artistName);
       });
   }
 
