@@ -45,6 +45,17 @@
                 target="_blank"
                 >more</a
               >
+
+              <ng-container *ngIf="spotifyArtist$ | async as spotify">
+                <span *ngIf="spotify !== null" id="spotify-link">
+                  <a
+                    [href]="spotify.external_urls.spotify"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                    >Spotify</a
+                  ></span
+                >
+              </ng-container>
             </ion-card-content>
           </ion-card>
         </ion-col>

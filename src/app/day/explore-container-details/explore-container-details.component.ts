@@ -2,10 +2,12 @@ import { StorageService } from './../../services/storage.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { LoadingController, ToastController } from '@ionic/angular';
-import { Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { map, switchMap, takeUntil, tap } from 'rxjs/operators';
 import { EventDataService } from './../../services/event-data.service';
 import { Show } from '../../backend-models/show';
+import { SpotifyDataService } from '../services/spotify-data.service';
+import { SpotifyArtist } from '../services/models/spotify-artist-response';
 
 @Component({
   selector: 'app-explore-container-details',
@@ -17,6 +19,8 @@ export class ExploreContainerDetailsComponent implements OnInit, OnDestroy {
 
   item: Show;
 
+  spotifyArtist$: Observable<SpotifyArtist | null>;
+
   private readonly _unsubscribe = new Subject<void>();
 
   constructor(
@@ -24,7 +28,8 @@ export class ExploreContainerDetailsComponent implements OnInit, OnDestroy {
     private _route: ActivatedRoute,
     private _loadingController: LoadingController,
     private _toastController: ToastController,
-    private _storageService: StorageService
+    private _storageService: StorageService,
+    private _spotifyDataService: SpotifyDataService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -44,6 +49,10 @@ export class ExploreContainerDetailsComponent implements OnInit, OnDestroy {
       )
       .subscribe(() => {
         loading.dismiss();
+
+        this.spotifyArtist$ = this.getSpotifyData(this.item.artistName).pipe(
+          tap(res => console.log('res', res))
+        );
       });
   }
 
@@ -77,5 +86,11 @@ export class ExploreContainerDetailsComponent implements OnInit, OnDestroy {
     });
 
     toast.present();
+  }
+
+  private getSpotifyData(artistName: string): Observable<SpotifyArtist | null> {
+    return this._spotifyDataService.getData(
+      artistName.replace(/\(.*\)/g, '').trim()
+    );
   }
 }
