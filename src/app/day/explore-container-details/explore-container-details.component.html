@@ -36,15 +36,34 @@
 
             <ion-card-content>
               <p [innerHtml]="item.showcase"></p>
-              <a
-                [href]="
-                  'https://procfu.com/waves-2023-shows/artist-details/' +
-                  item.id
-                "
-                rel="noopener noreferrer"
-                target="_blank"
-                >more</a
-              >
+
+              <div id="detail-card-links">
+                <a
+                  [href]="
+                    'https://procfu.com/waves-2023-shows/artist-details/' +
+                    item.id
+                  "
+                  rel="noopener noreferrer"
+                  target="_blank"
+                  >More</a
+                >
+
+                <ng-container *ngIf="spotifyArtist$ | async as spotify">
+                  <span *ngIf="spotify !== null" id="spotify-link">
+                    <a
+                      [href]="spotify.external_urls.spotify"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      >Spotify (Followers:
+                      {{ spotify.followers.total | number: '2.' }})</a
+                    ></span
+                  >
+
+                  <div *ngIf="spotify.images.length" id="spotify-image">
+                    <img [src]="spotify.images[0].url" />
+                  </div>
+                </ng-container>
+              </div>
             </ion-card-content>
           </ion-card>
         </ion-col>
