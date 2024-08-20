@@ -17,7 +17,7 @@ export class DayPage implements OnInit, OnDestroy {
 
   day: Day;
 
-  favorites: string[];
+  favorites: number[];
 
   isFavoritesFilterActive: boolean;
 
@@ -81,7 +81,9 @@ export class DayPage implements OnInit, OnDestroy {
     this._storageService
       .getFavorites()
       .pipe(takeUntil(this._unsubscribe))
-      .subscribe(favs => (this.favorites = favs));
+      .subscribe(favs => {
+        this.favorites = favs;
+      } );
   }
 
   onItemSelected(itemId: string): void {

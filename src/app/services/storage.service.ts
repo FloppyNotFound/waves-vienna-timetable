@@ -21,7 +21,7 @@ export class StorageService {
 
   // Create and expose methods that users of this service can
   // call, for example:
-  setFavorite(id: string, isActive: boolean): Observable<string[]> {
+  setFavorite(id: number, isActive: boolean): Observable<number[]> {
     return this.getFavorites().pipe(
       map(favorites => {
         const newFavs = isActive
@@ -40,7 +40,7 @@ export class StorageService {
     );
   }
 
-  getFavorites(): Observable<string[]> {
+  getFavorites(): Observable<number[]> {
     if (!this._storage) {
       throw Error('Storage not ready');
     }
@@ -50,7 +50,7 @@ export class StorageService {
     );
   }
 
-  checkIsFavorite(id: string): Observable<boolean> {
+  checkIsFavorite(id: number): Observable<boolean> {
     return this.getFavorites().pipe(map(favs => favs.includes(id)));
   }
 }

@@ -38,18 +38,8 @@
               <p [innerHtml]="item.showcase"></p>
 
               <div id="detail-card-links">
-                <a
-                  [href]="
-                    'https://procfu.com/waves-2023-shows/artist-details/' +
-                    item.id
-                  "
-                  rel="noopener noreferrer"
-                  target="_blank"
-                  >More</a
-                >
-
                 <ng-container *ngIf="spotifyArtist$ | async as spotify">
-                  <span *ngIf="spotify !== null" id="spotify-link">
+                  <span *ngIf="spotify !== null">
                     <a
                       [href]="spotify.external_urls.spotify"
                       rel="noopener noreferrer"

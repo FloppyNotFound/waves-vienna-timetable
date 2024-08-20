@@ -41,7 +41,7 @@ export class ExploreContainerDetailsComponent implements OnInit, OnDestroy {
 
     this._route.paramMap
       .pipe(
-        map(paramMap => <string>paramMap.get('id')),
+        map(paramMap => Number(paramMap.get('id'))),
         switchMap(id => this._eventDataService.getItem(id)),
         tap(item => (this.item = <Show>item)),
         switchMap(() => this._storageService.checkIsFavorite(this.item.id)),
