@@ -86,7 +86,7 @@ export class DayPage implements OnInit, OnDestroy {
       } );
   }
 
-  onItemSelected(itemId: string): void {
+  onItemSelected(itemId: number): void {
     this._router.navigate([itemId], { relativeTo: this._activatedRoute });
   }
 
