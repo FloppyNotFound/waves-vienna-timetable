@@ -12,9 +12,9 @@ export class ExploreContainerComponent {
 
   @Input() favorites: number[] | undefined;
 
-  @Output() readonly timeslotSelected = new EventEmitter<string>();
+  @Output() readonly timeslotSelected = new EventEmitter<number>();
 
-  onItemSelected(itemId: string): void {
+  onItemSelected(itemId: number): void {
     this.timeslotSelected.emit(itemId);
   }
 }
