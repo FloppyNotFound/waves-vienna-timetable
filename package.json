@@ -63,7 +63,6 @@
     "@typescript-eslint/parser": "5.33.1",
     "eslint": "8.22.0",
     "eslint-plugin-import": "2.26.0",
-    "eslint-plugin-jsdoc": "39.3.6",
     "eslint-plugin-prefer-arrow": "1.2.3",
     "husky": "8.0.1",
     "jasmine-core": "3.8.0",

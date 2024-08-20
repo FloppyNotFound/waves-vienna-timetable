@@ -23,7 +23,7 @@
               <span>h</span>
               <span>, {{ slot.venue }}</span>
             </h3>
-            <p>{{ slot.showcase }}</p>
+            <p>{{ slot.showcase | stripHtml }}</p>
           </ion-label>
         </ion-item>
       </ng-container>

@@ -1,9 +1,9 @@
 export interface Show {
-  id: string;
+  id: number;
   artistName: string;
   start: string;
   end: string;
   venue: string;
   showcase: string;
-  thumbnail: string;
+  thumbnail: string | undefined;
 }

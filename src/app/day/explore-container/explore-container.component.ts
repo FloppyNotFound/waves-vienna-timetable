@@ -10,7 +10,7 @@ import { Show } from '../../backend-models/show';
 export class ExploreContainerComponent {
   @Input() timeslots$: Observable<Show[]>;
 
-  @Input() favorites: string[] | undefined;
+  @Input() favorites: number[] | undefined;
 
   @Output() readonly timeslotSelected = new EventEmitter<string>();
 

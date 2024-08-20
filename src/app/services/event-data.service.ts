@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of as observableOf } from 'rxjs';
+import { Observable, of as observableOf, zip } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Show } from '../backend-models/show';
-import { ShowsResponse } from '../backend-models/shows-response';
+import { ShowDays } from '../backend-models/show-days';
 
 enum Day {
   Thursday = 4,
@@ -17,7 +17,7 @@ export class EventDataService {
   private readonly _uri =
     'https://waves-vienna-timetable-api.floppynotfound.workers.dev/';
 
-  private _data: Show[] | undefined;
+  private _data: ShowDays | undefined;
 
   constructor(private backendService: HttpClient) {}
 
@@ -33,38 +33,36 @@ export class EventDataService {
     return this.getDataForDay(Day.Saturday);
   }
 
-  getItem(id: string): Observable<Show | undefined> {
-    return this.getData().pipe(map(items => items.find(d => d.id === id)));
+  getItem(id: number): Observable<Show | undefined> {
+    return zip(
+      this.getDataForDay(Day.Thursday),
+     this.getDataForDay(Day.Friday),
+     this.getDataForDay(Day.Saturday)
+    ).pipe(map(items => items.flat().find(d => d.id === id)));
   }
 
-  private getData(): Observable<Show[]> {
+  private getData(): Observable<ShowDays> {
     if (this._data) {
-      return observableOf(this._data);
+     return observableOf(this._data);
     }
 
     return this.backendService
-      .get<ShowsResponse>(this._uri)
-      .pipe(map(data => (this._data = data.shows)));
+      .get<ShowDays>(this._uri)
+      .pipe(tap(data => (this._data = data)));
   }
 
   private getDataForDay(day: Day): Observable<Show[]> {
     return this.getData().pipe(
-      map(data =>
-        data.filter(d => {
-          const dataDate = new Date(d.start);
-          const dataDay = dataDate.getDay();
-          const dataHour = dataDate.getHours();
-
-          // Show night shows at the previous day
-          const dayBreakHour = 5;
-
-          return (
-            (dataDay === day && dataHour > dayBreakHour) ||
-            (dataDay === day + 1 && dataHour < dayBreakHour)
-          );
-        })
-      ),
-      tap(data => data.forEach(d => (d.thumbnail = 'assets/icon/favicon.png')))
+      map(showDays => {
+        if(day === Day.Thursday) {
+          return showDays.thursday;
+        } else if(day === Day.Friday) {
+          return showDays.friday;
+        } else {
+          return showDays.saturday;
+        }
+      }),
+      tap(data => data.forEach(d => (d.thumbnail = d.thumbnail ?? 'assets/icon/favicon.png')))
     );
   }
 }
